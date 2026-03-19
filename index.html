@@ -89,28 +89,23 @@
   const zodiacs = ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"];
 
   function calculateZodiac() {
-    const yearInput = document.getElementById("year").value.trim();
-
-    if (!yearInput) {
-      alert("请输入年份！");
-      return;
-    }
-
-    const year = parseInt(yearInput);
-
-    // 检查是否是有效年份（比如 1000 ~ 3000）
-    if (isNaN(year) || year < 1000 || year > 3000) {
-      alert("请输入一个有效的年份（例如：1990）");
-      return;
-    }
-
-    // 计算生肖（以 2000 年为“鼠”）
-    const offset = (year - 2000) % 12;
-    const zodiac = zodiacs[offset];
-
-    // 显示结果
-    document.getElementById("result").innerHTML = `✅ 你的生肖是：<span style="color: #d43c7f;">${zodiac}</span>`;
+  const yearInput = document.getElementById("year").value.trim();
+  if (!yearInput) {
+    alert("请输入年份！");
+    return;
   }
+  const year = parseInt(yearInput);
+  if (isNaN(year) || year < 1000 || year > 3000) {
+    alert("请输入一个有效的年份（例如：1990）");
+    return;
+  }
+  // ✅ 关键修复：安全取模，解决负数问题
+  const offset = ((year - 2000) % 12 + 12) % 12;
+  const zodiac = zodiacs[offset];
+  document.getElementById("result").innerHTML = `✅ 你的生肖是：<span style="color: #d43c7f;">${zodiac}</span>`;
+}
+
+  
 </script>
 
 </body>
