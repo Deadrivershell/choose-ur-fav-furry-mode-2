@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="zh">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🐷 猜生肖小测试 | JavaScript 版</title>
+  <title>🐷 猜生肖小测试 | JavaScript 完美版</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -85,25 +84,33 @@
 </div>
 
 <script>
-  // 生肖列表（2000年是“鼠年”为基准）
-  const zodiacs = ["猫", "蝴蝶", "飞机", "企鹅", "grok", "米老鼠", "湿厕纸", "香烟", "东北大花", "地锅鸡", "烧麦", "薯条"];
-
+  // ✅ 正确：zodiacs 在 script 标签内，且在函数之前定义
+  const zodiacs =  ["猫", "蝴蝶", "飞机", "企鹅", "grok", "米老鼠", "湿厕纸", "香烟", "东北大花", "地锅鸡", "烧麦", "薯条"];
   function calculateZodiac() {
-  const yearInput = document.getElementById("year").value.trim();
-  if (!yearInput) {
-    alert("请输入年份！");
-    return;
+    const yearInput = document.getElementById("year").value.trim();
+
+    if (!yearInput) {
+      alert("请输入年份！");
+      return;
+    }
+
+    const year = parseInt(yearInput);
+
+    if (isNaN(year) || year < 1000 || year > 3000) {
+      alert("请输入一个有效的年份（例如：1990）");
+      return;
+    }
+
+    // ✅ 安全取模：处理负数年份
+    const offset = ((year - 2000) % 12 + 12) % 12;
+    const zodiac = zodiacs[offset];
+
+    document.getElementById("result").innerHTML = `✅ 你的生肖是：<span style="color: #d43c7f;">${zodiac}</span>`;
   }
-  const year = parseInt(yearInput);
-  if (isNaN(year) || year < 1000 || year > 3000) {
-    alert("请输入一个有效的年份（例如：1990）");
-    return;
-  }
-  // ✅ 关键修复：安全取模，解决负数问题
-  const offset = ((year - 2000) % 12 + 12) % 12;
-  const zodiac = zodiacs[offset];
-  document.getElementById("result").innerHTML = `✅ 你的生肖是：<span style="color: #d43c7f;">${zodiac}</span>`;
-}
+</script>
+
+</body>
+</html>
 
   
 </script>
